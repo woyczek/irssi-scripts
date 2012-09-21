@@ -21,6 +21,7 @@ my $GROWL_COMMAND = "/home/michael/bin/growlnotify";
 sub on_message_private {
     my ( $server_rec_ref, $msg, $nick, $address ) = @_;
     return unless Irssi::settings_get_bool('growl_show_private_messages');
+    return if Irssi::active_win()->get_active_name eq $nick;
     send_growl( "$nick sent a private message", $msg, 'Private message' );
 }
 
