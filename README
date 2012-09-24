@@ -11,6 +11,9 @@
     (for non blocking) then sshing to a remote host and envoking growlnotify
     there
 
+*   rehilight.pl
+    rehilight a query or other irssi window by window number
+
 probably not very useful to others, especially without heavy editing
 
  *  nagios-ack
