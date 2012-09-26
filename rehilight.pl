@@ -17,15 +17,16 @@ our %IRSSI   = (
 );
 
 sub rehilight {
-    my ($window_number) = shift;
-    my $window = Irssi::window_find_refnum($window_number);
-    $window->print( Irssi::settings_get_str('rehilight_text'),
-        , MSGLEVEL_HILIGHT );
+    my $target = shift;
+
+    my $window
+        = $target =~ m/^\d+$/
+        ? Irssi::window_find_refnum($target)
+        : Irssi::window_find_item($target);
+
+    $window->activity(4) if $window;
 }
 
-Irssi::settings_add_str( $IRSSI{'name'}, 'rehilight_text', 'rehilighted' );
-
 Irssi::command_bind( 'rehilight', \&rehilight );
-
 
 1;
