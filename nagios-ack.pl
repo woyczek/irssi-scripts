@@ -5,7 +5,7 @@ use vars qw($VERSION %IRSSI);
 
 # probably not very useful for other people but who knows?
 
-$VERSION = "0.0.1";
+$VERSION = "0.0.2";
 %IRSSI = (
     authors     => 'mikegrb',
     contact     => 'michael@thegrebs.com',
@@ -21,7 +21,7 @@ my $last_alert;
 
 sub on_public {
     my ($server, $msg, $nick, $addr, $target) = @_;
-    return unless $target eq '#linode-staff' && $nick eq 'linagios';
+    return unless $target eq '#linode-notifications' && $nick eq 'linagios';
     $last_alert = $msg if $msg =~ m/^PROBLEM/;
     return;
 }
@@ -33,7 +33,7 @@ sub nagios_ack {
         $window->print("Failed to parse last status: $last_alert");
     }
     my $message = 'linagios: ack ' . join ' ', reverse @issue;
-    $window->command('MSG #linode-staff ' . $message);
+    $window->command('MSG #linode-notifications ' . $message);
 }
 
 sub nagios_status {
