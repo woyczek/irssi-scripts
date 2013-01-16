@@ -21,7 +21,7 @@ my $last_alert;
 
 sub on_public {
     my ($server, $msg, $nick, $addr, $target) = @_;
-    return unless $target eq '#linode-notifications' && $nick eq 'linagios';
+    return unless $target eq Irssi::setting_get_str("nagios_ack_channel") && $nick eq Irssi::setting_get_str("nagios_ack_channel");
     $last_alert = $msg if $msg =~ m/^PROBLEM/;
     return;
 }
@@ -52,6 +52,8 @@ sub parse_status {
 sub nagios_inject {
     $last_alert = shift;
 }
+Irssi::settings_add_str("nagios_ack", "nagios_ack_channel", "");
+Irssi::settings_add_str("nagios_ack", "nagios_ack_nick", "linagios");
 Irssi::signal_add_first("message public", "on_public");
 Irssi::command_bind( 'ack',     \&nagios_ack );
 Irssi::command_bind( 'nagstat', \&nagios_status );
