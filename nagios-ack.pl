@@ -5,7 +5,7 @@ use vars qw($VERSION %IRSSI);
 
 # probably not very useful for other people but who knows?
 
-$VERSION = "0.0.1";
+$VERSION = "0.0.2";
 %IRSSI = (
     authors     => 'mikegrb',
     contact     => 'michael@thegrebs.com',
@@ -21,7 +21,7 @@ my $last_alert;
 
 sub on_public {
     my ($server, $msg, $nick, $addr, $target) = @_;
-    return unless $target eq '#linode-staff' && $nick eq 'linagios';
+    return unless $target eq Irssi::setting_get_str("nagios_ack_channel") && $nick eq Irssi::setting_get_str("nagios_ack_nick");
     $last_alert = $msg if $msg =~ m/^PROBLEM/;
     return;
 }
@@ -33,7 +33,7 @@ sub nagios_ack {
         $window->print("Failed to parse last status: $last_alert");
     }
     my $message = 'linagios: ack ' . join ' ', reverse @issue;
-    $window->command('MSG #linode-staff ' . $message);
+    $window->command('MSG ' . Irssi::settings_get_str("nagios_ack_channel") . $message);
 }
 
 sub nagios_status {
@@ -52,6 +52,8 @@ sub parse_status {
 sub nagios_inject {
     $last_alert = shift;
 }
+Irssi::settings_add_str("nagios_ack", "nagios_ack_channel", "");
+Irssi::settings_add_str("nagios_ack", "nagios_ack_nick", "linagios");
 Irssi::signal_add_first("message public", "on_public");
 Irssi::command_bind( 'ack',     \&nagios_ack );
 Irssi::command_bind( 'nagstat', \&nagios_status );
