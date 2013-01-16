@@ -21,7 +21,7 @@ my $last_alert;
 
 sub on_public {
     my ($server, $msg, $nick, $addr, $target) = @_;
-    return unless $target eq Irssi::setting_get_str("nagios_ack_channel") && $nick eq Irssi::setting_get_str("nagios_ack_channel");
+    return unless $target eq Irssi::setting_get_str("nagios_ack_channel") && $nick eq Irssi::setting_get_str("nagios_ack_nick");
     $last_alert = $msg if $msg =~ m/^PROBLEM/;
     return;
 }
@@ -33,7 +33,7 @@ sub nagios_ack {
         $window->print("Failed to parse last status: $last_alert");
     }
     my $message = 'linagios: ack ' . join ' ', reverse @issue;
-    $window->command('MSG #linode-notifications ' . $message);
+    $window->command('MSG ' . Irssi::settings_get_str("nagios_ack_channel") . $message);
 }
 
 sub nagios_status {
