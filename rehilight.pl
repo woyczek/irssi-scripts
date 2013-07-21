@@ -17,6 +17,7 @@ our %IRSSI   = (
 
 sub rehilight {
     my $target = shift;
+    $target =~ s/\s+$//;
 
     my $window
         = $target =~ m/^\d+$/
