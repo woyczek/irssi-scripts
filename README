@@ -14,6 +14,10 @@
 *   rehilight.pl
     rehilight a query or other irssi window by window number
 
+*   squeeze
+    simple script that passes input through Lingua::EN::Squueze before sending
+    to current channel
+
 probably not very useful to others, especially without heavy editing
 
  *  nagios-ack
