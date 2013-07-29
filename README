@@ -18,6 +18,10 @@
     simple script that passes input through Lingua::EN::Squueze before sending
     to current channel
 
+*   smoke
+    Not an irssi script but you can /alias smoke exec -o /path/to/smoke
+    edit top of script to specify when you quit
+
 probably not very useful to others, especially without heavy editing
 
  *  nagios-ack
