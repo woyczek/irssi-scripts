@@ -4,3 +4,4 @@ clockbot.old
 config
 config.autosave
 scripts/autorun/
+*.swp
